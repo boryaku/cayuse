@@ -1,0 +1,38 @@
+buildscript {
+	ext {
+		LIB_GRAPHQL_JAVA_TOOLS_VER = '5.2.0'
+		LIB_SPRING_BOOT_VER = '2.1.0.RELEASE'
+		LIB_GRAPHQL_JAVA_TOOLS_VER = '5.2.0'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${LIB_SPRING_BOOT_VER}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.cayuse'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies{
+	compile group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '5.0.2'
+	compile group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '5.0.2'
+	compile "com.graphql-java:graphql-java-tools:$LIB_GRAPHQL_JAVA_TOOLS_VER"
+
+	compile("org.springframework.boot:spring-boot-starter-web:$LIB_SPRING_BOOT_VER")
+	compile("org.springframework.boot:spring-boot-starter-actuator:$LIB_SPRING_BOOT_VER")
+
+}
