@@ -9,4 +9,6 @@ type City {
     temp: String!
     timeZone: String!
     elevation: String!
+    lat: String!
+    lon: String!
 }
