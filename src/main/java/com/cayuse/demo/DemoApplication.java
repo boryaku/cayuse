@@ -6,7 +6,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = { "com.cayuse.demo" })
 public class DemoApplication {
 
 	public static void main(String[] args) {

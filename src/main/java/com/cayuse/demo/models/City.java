@@ -2,8 +2,10 @@ package com.cayuse.demo.models;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode
 public class City {
 
     private int id;

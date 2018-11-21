@@ -10,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class GoogleTimezoneRepo implements TimezoneRepo {
 
-    @Autowired
     private RestTemplate restTemplate;
 
     @Value("${google.timezone.url}")
@@ -18,6 +17,11 @@ public class GoogleTimezoneRepo implements TimezoneRepo {
 
     @Value("${google.apiKey}")
     private String googleApiKey;
+
+    @Autowired
+    public GoogleTimezoneRepo(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public String findByLatAndLon(String lat, String lon) {

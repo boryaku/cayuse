@@ -11,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class GoogleElevationRepo implements ElevationRepo {
 
-    @Autowired
     private RestTemplate restTemplate;
 
     @Value("${google.elevation.url}")
@@ -19,6 +18,11 @@ public class GoogleElevationRepo implements ElevationRepo {
 
     @Value("${google.apiKey}")
     private String googleApiKey;
+
+    @Autowired
+    public GoogleElevationRepo(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public String findByLatAndLon(String lat, String lon) {
