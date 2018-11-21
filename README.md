@@ -18,7 +18,7 @@ http://localhost:8080/graphiql/
 ```
 
 Run a query to verify the API is up and running, paste the following query into the left hand pane and press the play 
-button at the top left.
+button at the top left. You can change the zipCode value in the query to get the results for that city.
 ```graphql
 {
 	city(zipCode: "90210"){
