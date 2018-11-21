@@ -24,8 +24,10 @@ class Query implements GraphQLQueryResolver {
     /**
      * Root query for the top level city info finder, we use the open weather api to get information to assist
      * the other resolvers ie. timeZone and Elevation
+     *
      * @param zipCode
-     * @return
+     *
+     * @return partially hydrated City
      */
     public City getCity(String zipCode){
 
