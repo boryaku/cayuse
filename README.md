@@ -17,7 +17,8 @@ Open
 http://localhost:8080/graphiql/
 ```
 
-Run a query to verify the API is up and running
+Run a query to verify the API is up and running, paste the following query into the left hand pane and press the play 
+button at the top left.
 ```graphql
 {
 	city(zipCode: "90210"){
@@ -31,4 +32,12 @@ Run a query to verify the API is up and running
 		lon
 	}
 }
+```
+Note: The way GraphQL works is if you don't include timeZone or elevation in your query then the back-end
+won't make the API call, you can play with the attributes you want returned.
+
+To Run the tests 
+
+```
+> ./gradlew test
 ```
