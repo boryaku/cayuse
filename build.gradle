@@ -35,4 +35,6 @@ dependencies{
 	compile("org.springframework.boot:spring-boot-starter-web:$LIB_SPRING_BOOT_VER")
 	compile("org.springframework.boot:spring-boot-starter-actuator:$LIB_SPRING_BOOT_VER")
 
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
 }

@@ -1,67 +1,49 @@
 package com.cayuse.demo.resolvers;
 
+import com.cayuse.demo.models.City;
+import com.cayuse.demo.repos.ElevationRepo;
+import com.cayuse.demo.repos.TimezoneRepo;
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 
+/**
+ * This is the City Resolver it's the READ interface for data, we don't define any Mutations which would provide
+ * WRITE access.  This following the interface segregation pattern as described in the SOLID paradigm.  This is
+ * comparable to a traditional "Service" component.
+ */
 @Component
 public class CityResolver implements GraphQLResolver<City> {
 
+
     @Autowired
-    private RestTemplate restTemplate;
+    private TimezoneRepo timezoneRepo;
 
-    @Value("${google.timezone.url}")
-    private String googleTimezoneUrl;
 
-    @Value("${google.elevation.url}")
-    private String googleElevationUrl;
-
-    @Value("${google.apiKey}")
-    private String googleApiKey;
-
+    @Autowired
+    private ElevationRepo elevationRepo;
 
     /**
-     * Resolve the timezone from google api using the city's lat/lon.
+     * Resolve the timezone using the city's lat/lon.
      *
      * NOTE: This is only called if the field is requested.
      * @param city
      * @return
      */
     public String getTimeZone(City city){
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(googleTimezoneUrl)
-                .queryParam("location", city.lat+","+city.lon)
-                .queryParam("timestamp", "1331161200")
-                .queryParam("key", googleApiKey);
-
-        JsonNode timezoneReponse =
-                restTemplate.getForObject(builder.toUriString(), JsonNode.class);
-
-        return timezoneReponse.get("timeZoneName").asText();
+        return timezoneRepo.findByLatAndLon(city.getLat(), city.getLon());
     }
 
 
     /**
-     * Resolve the elevation from google api using the city's lat/lon.
+     * Resolve the elevation using the city's lat/lon.
      *
      * NOTE: This is only called if the field is requested.
      * @param city
      * @return
      */
     public String getElevation(City city){
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(googleElevationUrl)
-                .queryParam("locations", city.lat+","+city.lon)
-                .queryParam("key", googleApiKey);
-
-        JsonNode elevationReponse =
-                restTemplate.getForObject(builder.toUriString(), JsonNode.class);
-
-        return elevationReponse.get("results").get(0).get("elevation").asText();
+        return elevationRepo.findByLatAndLon(city.getLat(), city.getLon());
     }
 }
