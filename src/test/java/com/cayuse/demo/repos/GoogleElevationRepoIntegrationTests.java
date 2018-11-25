@@ -1,6 +1,7 @@
 package com.cayuse.demo.repos;
 
 
+import com.cayuse.demo.exceptions.RemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class GoogleElevationRepoIntegrationTests {
     public void findByLatAndLon(){
         String elevation = elevationRepo.findByLatAndLon("45.45", "-122.64");
         assertThat("12.11576080322266").isEqualTo(elevation);
+    }
+
+    @Test(expected = RemoteException.class)
+    public void findByLatAndLon_EXCEPTION(){
+        elevationRepo.findByLatAndLon("abc", "-122.64");
     }
 
 }

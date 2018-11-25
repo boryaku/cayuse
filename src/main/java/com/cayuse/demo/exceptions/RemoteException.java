@@ -8,13 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CityNotFound extends RuntimeException implements GraphQLError {
+public class RemoteException extends RuntimeException implements GraphQLError {
 
     private Map<String, Object> extensions = new HashMap<>();
 
-    public CityNotFound(String message, String zipCode) {
+    public RemoteException(String message, Map<String, Object> ext) {
         super(message);
-        extensions.put("invalid_zip_code", zipCode);
+
+        if(ext != null){
+            extensions.putAll(ext);
+        }
     }
 
     @Override

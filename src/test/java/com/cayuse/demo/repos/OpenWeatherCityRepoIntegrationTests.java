@@ -1,5 +1,6 @@
 package com.cayuse.demo.repos;
 
+import com.cayuse.demo.exceptions.RemoteException;
 import com.cayuse.demo.models.City;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,5 +26,10 @@ public class OpenWeatherCityRepoIntegrationTests {
         assertThat(city.getLon()).isEqualTo("-118.4");
         assertThat(city.getName()).isEqualTo("Beverly Hills");
         assertThat(city.getTemp()).isNotEmpty();
+    }
+
+    @Test(expected = RemoteException.class)
+    public void testFindByZipCode_EXCEPTION(){
+        cityRepo.findByZipCode("123");
     }
 }
