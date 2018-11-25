@@ -49,7 +49,6 @@ public class CityResolver implements GraphQLResolver<City> {
      */
     public String getElevation(City city){
         logger.debug("elevation requested for {}", city);
-
         return elevationRepo.findByLatAndLon(city.getLat(), city.getLon());
     }
 }
