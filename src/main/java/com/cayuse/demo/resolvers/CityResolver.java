@@ -4,6 +4,8 @@ import com.cayuse.demo.models.City;
 import com.cayuse.demo.repos.ElevationRepo;
 import com.cayuse.demo.repos.TimezoneRepo;
 import com.coxautodev.graphql.tools.GraphQLResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CityResolver implements GraphQLResolver<City> {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private TimezoneRepo timezoneRepo;
@@ -32,6 +35,7 @@ public class CityResolver implements GraphQLResolver<City> {
      * @return
      */
     public String getTimeZone(City city){
+        logger.debug("timezone requested for {}", city);
         return timezoneRepo.findByLatAndLon(city.getLat(), city.getLon());
     }
 
@@ -44,6 +48,8 @@ public class CityResolver implements GraphQLResolver<City> {
      * @return
      */
     public String getElevation(City city){
+        logger.debug("elevation requested for {}", city);
+
         return elevationRepo.findByLatAndLon(city.getLat(), city.getLon());
     }
 }

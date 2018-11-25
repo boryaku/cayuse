@@ -3,6 +3,8 @@ package com.cayuse.demo.repos;
 import com.cayuse.demo.exceptions.RemoteException;
 import com.cayuse.demo.models.City;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,9 @@ import java.util.Map;
 
 @Component
 public class OpenWeatherCityRepo implements CityRepo{
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     private RestTemplate restTemplate;
@@ -31,6 +36,8 @@ public class OpenWeatherCityRepo implements CityRepo{
 
     @Override
     public City findByZipCode(String zipCode) {
+        logger.debug("finding city info for {}", zipCode);
+
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(openWeatherUrl)
                 .queryParam("zip", zipCode)
                 .queryParam("appid", openWeatherAppId);
@@ -38,9 +45,14 @@ public class OpenWeatherCityRepo implements CityRepo{
         JsonNode weatherResponse;
 
         try {
+            logger.debug("calling open weather url {} for zip code {}", openWeatherUrl, zipCode);
+
             weatherResponse =
                     restTemplate.getForObject(builder.toUriString(), JsonNode.class);
+
+            logger.debug("response successful from open weather {}", weatherResponse);
         }catch (HttpClientErrorException e){
+            logger.error("exception getting city information from open weather", e);
             Map<String, Object> extensions = new HashMap<>();
             int statusCode = e.getStatusCode().value();
 
